@@ -1,0 +1,2 @@
+http://machinelearningmastery.com/machine-learning-in-python-step-by-step/
+http://machinelearningmastery.com/self-study-machine-learning-projects/

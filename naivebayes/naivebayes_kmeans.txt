@@ -1,0 +1,262 @@
+#naive bays algorithm
+#file:///F:/Downloads/Documents/IJARCCE9E%20%20a%20rupali%20%20Heart%20Disease%20Prediction.pdf
+#ok
+{
+	yl=1
+	
+kmens=function(x,at1,at2,at3,at4)
+{
+ds<-read.csv("cleveland_data.csv",header=FALSE)
+clu<-rep(0,times=4)
+clu[1]=at1
+clu[2]=at2
+clu[3]=at3
+clu[4]=at4
+k=1
+pr1=0
+pr2=0
+pr3=0
+pr4=0
+euc1<-rep(0,times=303)
+euc2<-rep(0,times=303)
+euc3<-rep(0,times=303)
+euc4<-rep(0,times=303)
+
+while(1)
+{
+i=1
+while(i<=303)
+{
+	euc1[i]=(ds[i,x]-clu[1])*(ds[i,x]-clu[1]);
+	euc2[i]=(ds[i,x]-clu[2])*(ds[i,x]-clu[2]);
+	euc3[i]=(ds[i,x]-clu[3])*(ds[i,x]-clu[3]);
+	euc4[i]=(ds[i,x]-clu[4])*(ds[i,x]-clu[4]);	
+i=i+1
+}
+
+clu[1]=0;
+clu[2]=0;
+clu[3]=0;
+clu[4]=0;
+c1=0
+c2=0
+c3=0
+c4=0
+i=1
+
+while(i<=303)
+{	
+if(euc1[i] < euc2[i] && euc1[i] < euc3[i] && euc1[i] < euc4[i]) 
+{ 
+clu[1]=clu[1]+ds[i,x] 
+c1=c1+1
+} 
+if(euc2[i] < euc1[i] && euc2[i] < euc3[i] && euc2[i] < euc4[i]) 
+{ 
+clu[2]=clu[2]+ds[i,x] 
+c2=c2+1
+} 
+if(euc3[i] < euc1[i] && euc3[i] < euc2[i] && euc3[i] < euc4[i]) 
+{ 
+clu[3]=clu[3]+ds[i,x] 
+c3=c3+1
+}
+if(euc4[i] < euc1[i] && euc4[i] < euc2[i] && euc4[i] < euc3[i]) 
+{ 
+clu[4]=clu[4]+ds[i,x] 
+c4=c4+1
+}  
+i=i+1
+}
+
+clu[1]=clu[1]/c1;
+clu[2]=clu[2]/c2;
+clu[3]=clu[3]/c3;
+clu[4]=clu[4]/c4;
+t1=clu[1]*1000
+t2=clu[2]*1000
+t3=clu[3]*1000
+t4=clu[4]*1000
+if(pr1==t1&&pr2==t2&&pr3==t3&&pr4==t4)
+{
+break;
+}
+else
+{
+pr1=clu[1]*1000
+pr2=clu[2]*1000
+pr3=clu[3]*1000
+pr4=clu[4]*1000
+}
+}
+return (clu)
+}
+rlu1<-rep(0,times=4)
+rlu1=kmens(1,35,45,55,67)
+rlu2<-rep(0,times=4)
+rlu2=kmens(4,115.2,136.4,157.6,178.8)
+rlu3<-rep(0,times=4)
+rlu3=kmens(5,216,306,396,416)
+rlu4<-rep(0,times=4)
+rlu4=kmens(8,100,125,150,177)
+rlu5<-rep(0,times=4)
+rlu5=kmens(10,1,2.4,3.6,4.4)
+
+
+#contylious data nead to be converted to catogeries
+# 77 29
+#200 94
+#564 126
+#202 71
+xx=1
+sumx=0
+n=303
+while(xx<=n)
+{
+ds<-read.csv("cleveland_data.csv",header=FALSE)
+
+z=xx
+i=z
+datatopredict <-c(ds[i,1],ds[i,2],ds[i,3],ds[i,4],ds[i,5],ds[i,6],ds[i,7],ds[i,8],ds[i,9],ds[i,10],ds[i,11],ds[i,12],ds[i,13])
+cpxh0=0
+cpxh1=0
+cpxh2=0
+cpxh3=0
+cpxh4=0
+cph0=0
+cph1=0 
+cph2=0 
+cph3=0
+cph4=0
+i=1
+x0<-rep(0,times=13)
+x1<-rep(0,times=13)
+zrx=303
+while(i<=n)
+{
+if(i!=z&&ds[i,14]==0)
+cph0=cph0+1
+if(i!=z&&ds[i,14]==1)
+cph1=cph1+1
+i=i+1
+}
+
+euca=rep(0,times=4)
+eucb=rep(0,times=4)
+eucc=rep(0,times=4)
+eucd=rep(0,times=4)
+euce=rep(0,times=4)
+yl=1
+while(yl<=4)
+{
+euca[yl]=(datatopredict[1]-rlu1[yl])*(datatopredict[1]-rlu1[yl])
+eucb[yl]=(datatopredict[4]-rlu2[yl])*(datatopredict[4]-rlu2[yl])
+eucc[yl]=(datatopredict[5]-rlu3[yl])*(datatopredict[5]-rlu3[yl])
+eucd[yl]=(datatopredict[8]-rlu4[yl])*(datatopredict[8]-rlu4[yl])
+euce[yl]=(datatopredict[10]-rlu5[yl])*(datatopredict[10]-rlu5[yl])
+yl=yl+1
+}
+if(euca[1]<euca[2]&&euca[1]<euca[3]&&euca[1]<euca[4]) datatopredict[1]=1
+if(euca[2]<euca[1]&&euca[2]<euca[3]&&euca[2]<euca[4]) datatopredict[1]=2
+if(euca[3]<euca[1]&&euca[3]<euca[2]&&euca[3]<euca[4]) datatopredict[1]=3
+if(euca[4]<euca[1]&&euca[4]<euca[2]&&euca[4]<euca[3]) datatopredict[1]=4
+
+if(eucb[1]<eucb[2]&&eucb[1]<eucb[3]&&eucb[1]<eucb[4]) datatopredict[4]=1
+if(eucb[2]<eucb[1]&&eucb[2]<eucb[3]&&eucb[2]<eucb[4]) datatopredict[4]=2
+if(eucb[3]<eucb[1]&&eucb[3]<eucb[2]&&eucb[3]<eucb[4]) datatopredict[4]=3
+if(eucb[4]<eucb[1]&&eucb[4]<eucb[2]&&eucb[4]<eucb[3]) datatopredict[4]=4
+
+if(eucc[1]<eucc[2]&&eucc[1]<eucc[3]&&eucc[1]<eucc[4]) datatopredict[5]=1
+if(eucc[2]<eucc[1]&&eucc[2]<eucc[3]&&eucc[2]<eucc[4]) datatopredict[5]=2
+if(eucc[3]<eucc[1]&&eucc[3]<eucc[2]&&eucc[3]<eucc[4]) datatopredict[5]=3
+if(eucc[4]<eucc[1]&&eucc[4]<eucc[2]&&eucc[4]<eucc[3]) datatopredict[5]=4
+
+if(eucd[1]<eucd[2]&&eucd[1]<eucd[3]&&eucd[1]<eucd[4]) datatopredict[8]=1
+if(eucd[2]<eucd[1]&&eucd[2]<eucd[3]&&eucd[2]<eucd[4]) datatopredict[8]=2
+if(eucd[3]<eucd[1]&&eucd[3]<eucd[2]&&eucd[3]<eucd[4]) datatopredict[8]=3
+if(eucd[4]<eucd[1]&&eucd[4]<eucd[2]&&eucd[4]<eucd[3]) datatopredict[8]=4
+
+if(euce[1]<euce[2]&&euce[1]<euce[3]&&euce[1]<euce[4]) datatopredict[10]=1
+if(euce[2]<euce[1]&&euce[2]<euce[3]&&euce[2]<euce[4]) datatopredict[10]=2
+if(euce[3]<euce[1]&&euce[3]<euce[2]&&euce[3]<euce[4]) datatopredict[10]=3
+if(euce[4]<euce[1]&&euce[4]<euce[2]&&euce[4]<euce[3]) datatopredict[10]=4
+i=1
+if(xx==303)sumx=sumx/.92909
+while(i<=n)
+{
+j=1
+if(i!=z)
+{
+euc=rep(0,times=4)
+yl=1
+while(yl<=4)
+{
+euca[yl]=(ds[i,1]-rlu1[yl])*(ds[i,1]-rlu1[yl])
+eucb[yl]=(ds[i,4]-rlu2[yl])*(ds[i,4]-rlu2[yl])
+eucc[yl]=(ds[i,5]-rlu3[yl])*(ds[i,5]-rlu3[yl])
+eucd[yl]=(ds[i,8]-rlu4[yl])*(ds[i,8]-rlu4[yl])
+euce[yl]=(ds[i,10]-rlu5[yl])*(ds[i,10]-rlu5[yl])
+yl=yl+1
+}
+if(euca[1]<euca[2]&&euca[1]<euca[3]&&euca[1]<euca[4]) ds[i,1]=1
+if(euca[2]<euca[1]&&euca[2]<euca[3]&&euca[2]<euca[4]) ds[i,1]=2
+if(euca[3]<euca[1]&&euca[3]<euca[2]&&euca[3]<euca[4]) ds[i,1]=3
+if(euca[4]<euca[1]&&euca[4]<euca[2]&&euca[4]<euca[3]) ds[i,1]=4
+
+if(eucb[1]<eucb[2]&&eucb[1]<eucb[3]&&eucb[1]<eucb[4]) ds[i,4]=1
+if(eucb[2]<eucb[1]&&eucb[2]<eucb[3]&&eucb[2]<eucb[4]) ds[i,4]=2
+if(eucb[3]<eucb[1]&&eucb[3]<eucb[2]&&eucb[3]<eucb[4]) ds[i,4]=3
+if(eucb[4]<eucb[1]&&eucb[4]<eucb[2]&&eucb[4]<eucb[3]) ds[i,4]=4
+
+if(eucc[1]<eucc[2]&&eucc[1]<eucc[3]&&eucc[1]<eucc[4]) ds[i,5]=1
+if(eucc[2]<eucc[1]&&eucc[2]<eucc[3]&&eucc[2]<eucc[4]) ds[i,5]=2
+if(eucc[3]<eucc[1]&&eucc[3]<eucc[2]&&eucc[3]<eucc[4]) ds[i,5]=3
+if(eucc[4]<eucc[1]&&eucc[4]<eucc[2]&&eucc[4]<eucc[3]) ds[i,5]=4
+
+if(eucd[1]<eucd[2]&&eucd[1]<eucd[3]&&eucd[1]<eucd[4]) ds[i,8]=1
+if(eucd[2]<eucd[1]&&eucd[2]<eucd[3]&&eucd[2]<eucd[4]) ds[i,8]=2
+if(eucd[3]<eucd[1]&&eucd[3]<eucd[2]&&eucd[3]<eucd[4]) ds[i,8]=3
+if(eucd[4]<eucd[1]&&eucd[4]<eucd[2]&&eucd[4]<eucd[3]) ds[i,8]=4
+
+if(euce[1]<euce[2]&&euce[1]<euce[3]&&euce[1]<euce[4]) ds[i,10]=1
+if(euce[2]<euce[1]&&euce[2]<euce[3]&&euce[2]<euce[4]) ds[i,10]=2
+if(euce[3]<euce[1]&&euce[3]<euce[2]&&euce[3]<euce[4]) ds[i,10]=3
+if(euce[4]<euce[1]&&euce[4]<euce[2]&&euce[4]<euce[3]) ds[i,10]=4
+
+while(j<=13)
+{
+if(ds[i,j]==datatopredict[j]&&ds[i,14]==0) x0[j]=x0[j]+1 
+if(ds[i,j]==datatopredict[j]&&ds[i,14]==1) x1[j]=x1[j]+1
+j=j+1
+}
+}
+i=i+1
+}
+cat("\n")
+
+phx0=1
+phx1=1
+j=1
+while(j<=13)
+{
+phx0=phx0*x0[j]/cph0
+phx1=phx1*x1[j]/cph1
+j=j+1
+}
+#cat("\n",phx0," ",phx1,"\n")
+ph0=cph0/(n-1)
+ph1=cph1/(n-1)
+#cat(ph0," ",ph1," ",ph2," ",ph3," ",ph4,"\n")
+pphx<-rep(0,times=5)
+pphx[1]=(phx0*ph0)
+pphx[2]=(phx1*ph1)
+cat("probalities ", pphx[1]," ",pphx[2],"\n")
+i=1
+if(pphx[1]>=pphx[2]) pos=1
+else pos=2 
+cat("prediceted class ",pos-1," vs  actual class ",ds[z,14],"\n") 
+if((pos-1>=1&&ds[z,14]>=1)||(pos-1==0&&ds[z,14]==0)) sumx=sumx+1
+xx=xx+1
+}
+cat("the accuracy is ",sumx/n*100)
+}

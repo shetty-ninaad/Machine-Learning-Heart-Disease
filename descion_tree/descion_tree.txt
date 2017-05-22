@@ -1,0 +1,22 @@
+# Load the party package. It will automatically load other dependent packages.
+library(party)
+ds<-read.csv("cleveland_data.csv",header=FALSE)
+# Create the input data frame.
+input.dat <- ds[c(1:303),]
+
+# Give the chart file a name.
+png(file = "decision_tree_2.jpeg",width     = 3.25,
+  height    = 3.25,
+  units     = "in",
+  res       = 1200,
+  pointsize = 5)
+# Create the tree.
+  output.tree <- ctree(
+  ds[,14] ~ ds[,1]+ds[,2]+ds[,3]+ds[,4]+ds[,5]+ds[,6]+ds[,7]+ds[,8]+ds[,9]+ds[,10]+ds[,11]+ds[,12]+ds[,13] ,  
+  data = input.dat)
+
+# Plot the tree.
+plot(output.tree,"descion tree for heart disease prediction")
+
+# Save the file.
+dev.off()
